@@ -14,4 +14,4 @@ App to keep track of electronic devices
 * Migrate the database: `npm run migrate`
 
 ### Useful Link
-* Adminer will be running at http://localhost:8080
+* pgadmin will be running at http://localhost:15432

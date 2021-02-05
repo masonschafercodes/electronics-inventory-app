@@ -16,7 +16,7 @@ App to keep track of electronic devices
 * Seed the Database: `npm run seed`
 
 ### Here is what the response should be when you seed the Database
-<img src="https://i.ibb.co/F6wxC5c/carbon.png" alt="seed response" style="width: 50%; padding: 10px" />
+<img src="https://i.ibb.co/F6wxC5c/carbon.png" alt="seed response" style="width: 30%; padding: 10px" />
 
 ### Useful Link
 * pgadmin will be running at http://localhost:15432

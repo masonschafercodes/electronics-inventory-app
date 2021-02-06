@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model item {
+  id               Int       @id @default(autoincrement())
+  name_of_item     String
+  description      String
+  person_id        Int?
+  currently_in_use Boolean?
+  created_at       DateTime  @default(now())
+  updated_at       DateTime  @default(now())
+  deleted_at       DateTime?
+  person           person?   @relation(fields: [person_id], references: [id])
+}
+
+model knex_migrations {
+  id             Int       @id @default(autoincrement())
+  name           String?
+  batch          Int?
+  migration_time DateTime?
+}
+
+model knex_migrations_lock {
+  index     Int  @id @default(autoincrement())
+  is_locked Int?
+}
+
+model person {
+  id                Int       @id @default(autoincrement())
+  first_name        String
+  last_name         String
+  email_address     String    @unique
+  number_of_devices Int
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @default(now())
+  deleted_at        DateTime?
+  item              item[]
+}

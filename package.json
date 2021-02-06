@@ -1,19 +1,38 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "App to keep track of electronic devices",
   "main": "index.js",
   "scripts": {
     "migrate": "knex migrate:latest",
     "rollback": "knex migrate:rollback",
-    "seed": "knex seed:run"
+    "seed": "knex seed:run",
+    "dev": "nodemon src/api/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^2.16.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^4.4.1",
     "knex": "^0.21.17",
+    "morgan": "^1.10.0",
     "pg": "^8.5.1"
-  }
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7",
+    "prisma": "^2.16.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/masonschafercodes/electronics-inventory-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/masonschafercodes/electronics-inventory-app/issues"
+  },
+  "homepage": "https://github.com/masonschafercodes/electronics-inventory-app#readme"
 }

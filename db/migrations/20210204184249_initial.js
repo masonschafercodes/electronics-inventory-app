@@ -24,8 +24,13 @@ exports.up = async function (knex) {
     table.increments().notNullable();
     table.string("name_of_item").notNullable();
     table.string("description").notNullable();
-    table.integer('person_id').unsigned().references('id').inTable('person').onDelete('cascade');
-    table.boolean('currently_in_use');
+    table
+      .integer("person_id")
+      .unsigned()
+      .references("id")
+      .inTable("person")
+      .onDelete("cascade");
+    table.boolean("currently_in_use").defaultTo(true);
     addDefaultColumns(table);
   });
 };

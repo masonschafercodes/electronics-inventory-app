@@ -10,10 +10,25 @@ const prisma = new PrismaClient();
 
 const PORT = process.env.PORT || 9090;
 
+let whitelist = ["http://localhost:3000"];
+
 const app = express();
 app.use(express.json());
 app.use(morgan("dev"));
-app.use(cors());
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // allow requests with no origin
+      if (!origin) return callback(null, true);
+      if (whitelist.indexOf(origin) === -1) {
+        let message =
+          "The CORS policy for this origin does not allow access from this particular origin";
+        return callback(new Error(message), false);
+      }
+      return callback(null, true);
+    },
+  })
+);
 app.use(helmet());
 
 app.get("/", (req, res) => {
@@ -90,13 +105,34 @@ app.get("/people", async (req, res) => {
   }
 });
 
+//Get All People with Devices
+app.get("/people-wo-items", async (req, res) => {
+  try {
+    const peopleWithOutItems = await prisma.person
+      .findMany({
+        where: {
+          number_of_devices: {
+            equals: 0,
+          },
+        },
+      })
+      .catch((e) => res.send({ message: e }))
+      .finally(async () => {
+        await prisma.$disconnect();
+      });
+    res.json(peopleWithOutItems);
+  } catch (e) {
+    throw e;
+  }
+});
+
 //Get Unique Person by Id
-app.get(`/person/:id`, async (req, res) => {
-  const { id } = req.params;
+app.get(`/person/:name`, async (req, res) => {
+  const { name } = req.params;
   const personToFind = await prisma.person
-    .findUnique({
+    .findFirst({
       where: {
-        id: parseInt(id),
+        last_name: name,
       },
     })
     .catch((e) => res.send({ message: e }))
